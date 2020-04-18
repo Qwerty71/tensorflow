@@ -3203,7 +3203,17 @@ def _accumulate_n_grad(op, grad):
 def sigmoid(x, name=None):
   """Computes sigmoid of `x` element-wise.
 
-  Specifically, `y = 1 / (1 + exp(-x))`.
+  Specifically, computes `y = 1 / (1 + exp(-x))`.
+  
+  The sigmoid function is a function that outputs between `[0, 1]` and is often
+  used as the logistic activation function of the last layer in a 
+  classification model. This is due to the nature of its range - for values of 
+  `x` that are positive, the function outputs a value `> 0.5` (and as `x` 
+  approaches infinity, the value approaches `1`), and for values of `x` that 
+  are negative, the function outputs a value `< 0.5` (and as `x` approaches 
+  negative infinity, the value approaches `0`). At `x = 0`, the value is `0.5`.
+  Due to this behavior, the sigmoid function is often used to map a tensor to 
+  a list of probabilities (since probabilities are also between `[0, 1]`).
 
   Args:
     x: A Tensor with type `float16`, `float32`, `float64`, `complex64`, or
@@ -3212,6 +3222,13 @@ def sigmoid(x, name=None):
 
   Returns:
     A Tensor with the same type as `x`.
+    
+  Usage Example:
+
+  >>> tf.math.sigmoid(1.0)
+  <tf.Tensor: shape=(), dtype=float32, numpy=0.73...>
+  >>> tf.math.sigmoid(-1.0)
+  <tf.Tensor: shape=(), dtype=float32, numpy=0.26...>
 
   @compatibility(scipy)
   Equivalent to scipy.special.expit
